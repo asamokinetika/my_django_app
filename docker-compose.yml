@@ -1,0 +1,27 @@
+version: "3"
+services:
+ web:
+   container_name: "django_web"
+   build: .
+   command: python3 manage.py runserver 0.0.0.0:8000
+   working_dir: /code
+   ports:
+     - 8000:8000
+   volumes:
+     - .:/code
+   depends_on:
+     - db
+ db:
+   container_name: "django_db"
+   image: mysql:5.7
+   restart: always
+   environment:
+     MYSQL_ROOT_PASSWORD: root
+     MYSQL_DATABASE: "django-db"
+     MYSQL_USER: django
+     MYSQL_PASSWORD: django
+     TZ: 'Asia/Tokyo'
+   volumes:
+     - ./mysql:/var/lib/mysql
+   ports:
+     - 3306:3306
