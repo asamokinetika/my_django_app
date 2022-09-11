@@ -1,7 +1,8 @@
 
 from django import forms
+from .models import User
 from django.contrib.auth.forms import (
-    AuthenticationForm
+    AuthenticationForm,UserCreationForm
 )
 
 
@@ -14,3 +15,7 @@ class LoginForm(AuthenticationForm):
             field.widget.attrs['class'] = 'form-control'
             field.widget.attrs['placeholder'] = field.label
     
+class UserCreateForm(UserCreationForm):
+    class Meta:
+        model=User
+        fields=["email","name","password1","password2"]
