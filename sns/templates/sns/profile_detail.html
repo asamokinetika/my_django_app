@@ -1,0 +1,28 @@
+{% extends "sns/base.html"%}
+{% block content %}
+
+<head>
+    <meta charset="utf-8">
+    <title>User_Profile</title>
+    
+</head>
+<h2>User_Profile</h2>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>ユーザーemail</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>ユーザーネーム</th>
+            <td>{{ user.name }}</td>
+        </tr>
+        <tr>
+            <th>プロフィール画像</th>
+            <td><img src="{{ user.img.url }}" alt="プロフィール画像"></td>
+        </tr>
+    </tbody>
+</table>
+
+
+{% endblock %}
