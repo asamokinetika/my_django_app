@@ -1,13 +1,15 @@
-from django.shortcuts import render,redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render,redirect, resolve_url
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.contrib.auth.views import(LoginView,LogoutView) 
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
 from django.http import HttpResponse,HttpResponseRedirect
 from django.views import generic
-from .forms import LoginForm,UserCreateForm
+from .forms import LoginForm,UserCreateForm,UserEditForm
 from .models import User
 from django.urls import reverse_lazy
+
 # Create your views here.
 class Top(generic.TemplateView):
     template_name ='sns/top.html'
@@ -30,3 +32,24 @@ class Signup(CreateView):
         self.object = user
         return HttpResponseRedirect(self.get_success_url())
 
+
+class OnlyYouMixin(UserPassesTestMixin):
+    raise_exception = True
+
+    def test_func(self):
+        user = self.request.user
+        return user.pk == self.kwargs['pk'] or user.is_superuser
+
+
+class UserDetail(OnlyYouMixin, generic.DetailView):
+    model = User
+    template_name = 'sns/profile_detail.html'
+
+
+class UserUpdate(OnlyYouMixin, generic.UpdateView):
+    model = User
+    form_class = UserEditForm
+    template_name = 'sns/profile_edit.html'
+
+    def get_success_url(self):
+        return resolve_url('sns:profile_detail', pk=self.kwargs['pk'])
