@@ -1,0 +1,19 @@
+{% extends "sns/base.html"%}
+{% block content %}
+
+<head>
+    <meta charset="utf-8">
+    <title>Friendrequest</title>
+    
+</head>
+<h2>Friendrequest</h2>
+<form action="{% url 'sns:friend_request_accept' pk %}" method="post">
+    {% csrf_token %}
+   
+    <tr><th></th><td>
+        <input type="submit" value="accept" class="btn btn-primary mt-2">
+    </td></tr>
+</form>
+
+
+{% endblock %}

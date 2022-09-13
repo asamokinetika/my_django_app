@@ -1,0 +1,47 @@
+{% extends "sns/base.html"%}
+{% block content %}
+
+<head>
+    <meta charset="utf-8">
+    <title>FriendList</title>
+    
+</head>
+<h2>FriendList</h2>
+<table class="table">
+    <tbody>
+        
+        {% for item in all_friend %}
+        
+        <tr>
+            <td>{{item.inviter.name}}</td>
+            <td>your friend</td>
+            
+            <td><img src="{{ item.inviter.img.url }}" alt="プロフィール画像"></td>
+            <td><a href="{% url 'sns:talkroom_friend' item.id %}"> Goto TALK</a></td>
+        </tr>
+        {% endfor %}
+        
+        {% for item in friend_invitation %}
+        <tr>
+            <td>{{item.inviter.name}}</td>
+            <td>friend Request from other user</td>
+            <td><img src="{{ item.inviter.img.url }}" alt="プロフィール画像"></td>
+            <td><a href="{% url 'sns:friend_request_accept' item.id %}">accept</a> </td>
+        </tr>
+        {% endfor %}
+       
+        {% for item in your_invitation %}
+        <tr>
+            <td>{{item.invitee.name}}</td>
+            <td>friend Request you sent</td>
+            <td><img src="{{ item.invitee.img.url }}" alt="プロフィール画像"></td>
+        </tr>
+        {% endfor %}
+
+
+ 
+    </tbody>
+</table>
+
+
+{% endblock %}

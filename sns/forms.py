@@ -32,4 +32,16 @@ class UserEditForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'    
 
-    
+class FindUserForm(forms.Form):
+    find=forms.CharField(label='Find',required=False,widget=forms.TextInput(attrs={'class':'form-control'}))
+
+
+
+class FriendMessageForm(forms.Form):
+    content=forms.CharField(max_length=1000)
+
+"""class FriendListForm(forms.Form):
+    def __init__(self,user,*args,**kwargs):
+        super(FriendListForm,self).__init__(*args,**kwargs)
+        self.fields['friend_name']=forms. 
+"""

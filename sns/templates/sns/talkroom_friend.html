@@ -1,0 +1,30 @@
+{% extends "sns/base.html"%}
+{% block content %}
+
+<head>
+    <meta charset="utf-8">
+    <title>TalkRoom</title>
+    
+</head>
+<h2>TalkRoom</h2>
+<table class="table">
+    <tbody>
+        
+        {% for msg in messages reversed %}
+        <tr>
+            <td>{{msg.owner}}</td>
+            <td><img src="{{ msg.owner.img.url }}" alt="プロフィール画像"></td>
+            <td>{{msg.content}}</td>
+            <td>{{msg.pub_date}}</td>
+        </tr>
+        {% endfor %}
+        
+    </tbody>
+</table>
+<form action="{% url 'sns:talkroom_friend' pk %}" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="click" class="btn btn-primary mt-2">
+</form>
+
+{% endblock %}
