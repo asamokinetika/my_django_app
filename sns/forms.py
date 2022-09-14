@@ -40,6 +40,19 @@ class FindUserForm(forms.Form):
 class FriendMessageForm(forms.Form):
     content=forms.CharField(max_length=1000)
 
+
+
+class CreateGroupForm(forms.Form):
+    def __init__(self,user,friends=[],vals=[],*args,**Kwargs):
+        super(CreateGroupForm,self).__init__(*args,**Kwargs)
+        self.fields['room_name']=forms.CharField(label='room_name',required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
+        self.fields['friends']=forms.MultipleChoiceField(
+            choices=[(item.inviter.id,item.inviter.name) for item in friends],
+            widget=forms.CheckboxSelectMultiple(),
+            initial=vals
+        )
+
+
 """class FriendListForm(forms.Form):
     def __init__(self,user,*args,**kwargs):
         super(FriendListForm,self).__init__(*args,**kwargs)

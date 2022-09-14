@@ -6,7 +6,7 @@
     <title>TalkRoom</title>
     
 </head>
-<h2>TalkRoom</h2>
+<h2>{{group_name}}</h2>
 <div class="chat-room-body">
 {% for message in messages %}
     <div class="chat-box">
@@ -30,7 +30,7 @@
 
 
 <script>
-    const url = 'ws://localhost:8000/ws/' + '{{room}}'
+    const url = 'ws://localhost:8000/ws/group/' + '{{room}}'
     var ws = new WebSocket(url)
     
     document.getElementById("send").onclick = function sendMessage () {

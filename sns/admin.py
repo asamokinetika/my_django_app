@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.utils.translation import gettext as _
-from .models import User,Group,GroupInvitation,GroupMessage,Friend,FriendMessage
+from .models import TalkRoom, User,Group,GroupInvitation,GroupMessage,Friend,FriendMessage
 # Register your models here.
 
 class MyUserChangeForm(UserChangeForm):
@@ -54,3 +54,4 @@ admin.site.register(GroupMessage)
 admin.site.register(GroupInvitation)
 admin.site.register(Friend)
 admin.site.register(FriendMessage)
+admin.site.register(TalkRoom)

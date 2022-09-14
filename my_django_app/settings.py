@@ -32,13 +32,15 @@ LOGIN_REDIRECT_URL = 'sns:top'
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sns'
+    'sns',
+    
 ]
 
 MIDDLEWARE = [
@@ -70,7 +72,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'my_django_app.wsgi.application'
-
+# Channels
+ASGI_APPLICATION = 'sns.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -82,7 +85,8 @@ DATABASES = {
         'USER': 'django',
         'PASSWORD':'django',
         'HOST': 'db',
-        'POST': 3306
+        'POST': 3306,
+        'OPTIONS': {'charset': 'utf8mb4'}
     }
 }
 
@@ -130,3 +134,12 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': { 'hosts': [('redis', 6379)], },
+    },
+}

@@ -45,10 +45,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.name
 
+class TalkRoom(models.Model):
+    name=models.CharField(max_length=500)
+    pub_date=models.DateTimeField(auto_now_add=True)
 
 class Group(models.Model):
     owner=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='group_owner')
     group_name=models.CharField(max_length=100)
+    room=models.ForeignKey(TalkRoom,on_delete=models.CASCADE,related_name='talk_room_group')
 
     def __str__(self):
         return str(self.group_name)+'(groupowner:'+str(self.owner)+')'
@@ -57,6 +61,7 @@ class Friend(models.Model):
     inviter=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='inviter_friend')
     invitee=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='invitee_friend')
     auth=models.BooleanField()
+    room=models.ForeignKey(TalkRoom,on_delete=models.CASCADE,related_name='talk_room_friend')
     def __str__(self):
         return 'FriendInvitation '+str(self.inviter)+'_to_'+str(self.invitee)
 
@@ -71,6 +76,7 @@ class GroupInvitation(models.Model):
 class FriendMessage(models.Model):
     owner=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='message_owner_friend')
     receiver=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='message_receiver_friend')
+    room=models.ForeignKey(TalkRoom,on_delete=models.CASCADE,related_name='talk_room_friend_message')
     content=models.TextField(max_length=1000)
     pub_date=models.DateTimeField(auto_now_add=True)
 
