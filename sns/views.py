@@ -233,3 +233,6 @@ def Grouptalk(request,pk):
             'group_name':group_name
     }
     return render(request,"sns/talkroom_group.html",params)
+
+def base(request):
+    return render(request,"sns/base.html")

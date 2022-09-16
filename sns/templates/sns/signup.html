@@ -1,29 +1,61 @@
-{% extends "sns/base.html"%}
-{% block content %}
-
-<head>
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
-    <title>Create_User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Signin Template · Bootstrap v5.0</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
     
-</head>
-<h2>Create_User</h2>
 
+    <!-- Bootstrap core CSS -->
+<link href="{% static '/sns/css/bootstrap.min.css' %}" rel="stylesheet">
 
-  <div class="card col-md-6" id="form1">
-    <div class="card-body">
-       <form action="{% url 'sns:signup' %}" method="POST">
-                {{ form.non_field_errors }}
-                {% for field in form %}
-                {{ field.label }}<br>
-                    {{ field }}
-                    {{ field.errors }}
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
 
-                    <hr>
-                {% endfor %}
-                <button type="submit" class="btn btn-success btn-info btn-block" >Create new User</button>
-                {% csrf_token %}
-              </form>
-            </div>
-        </div>
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="{% static '/sns/css/signin.css' %}" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    
+<main class="form-signin">
+    <form action="{% url 'sns:signup' %}" method="POST">
+    <h1 class="h3 mb-3 fw-normal">ユーザー新規登録</h1>
+    {% for field in form %}
+    {{field.label}}
+    <div class="form-floating">
+        {{ field }}
+        {{ field.errors }}
+        
     </div>
-{% endblock %}
+    {% endfor %}
+    <button class="w-100 btn btn-lg btn-primary" type="submit">新規登録</button>
+    {% csrf_token %}
+   
+  </form>
+</main>
+
+
+    
+  </body>
+</html>
