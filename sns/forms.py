@@ -8,7 +8,6 @@ from django.contrib.auth.forms import (
 
 
 class LoginForm(AuthenticationForm):
-    """ログインフォーム"""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -52,10 +51,3 @@ class CreateGroupForm(forms.Form):
             initial=vals
         )
         self.fields['img']=forms.ImageField(label='img',)
-
-
-"""class FriendListForm(forms.Form):
-    def __init__(self,user,*args,**kwargs):
-        super(FriendListForm,self).__init__(*args,**kwargs)
-        self.fields['friend_name']=forms. 
-"""
