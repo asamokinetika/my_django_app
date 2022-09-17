@@ -265,5 +265,3 @@ def Grouptalk(request,pk):
     }
     return render(request,"sns/talkroom_group.html",params)
 
-def base(request):
-    return render(request,"sns/base.html")
