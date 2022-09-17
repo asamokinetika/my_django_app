@@ -1,5 +1,4 @@
 media/
 mysql/
-sns/__pycahe__/
-my_django_app/__pycahe__/
+**/__pycache/__
 .pyc
