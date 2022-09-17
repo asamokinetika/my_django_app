@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 LOGIN_URL = 'sns:login'
-LOGIN_REDIRECT_URL = 'sns:top'
+LOGIN_REDIRECT_URL = 'sns:hello'
 
 # Application definition
 
@@ -86,7 +86,10 @@ DATABASES = {
         'PASSWORD':'django',
         'HOST': 'db',
         'POST': 3306,
-        'OPTIONS': {'charset': 'utf8mb4'}
+        'OPTIONS': {'charset': 'utf8mb4',
+                    'sql_mode': 'TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY',
+                    },
+
     }
 }
 
@@ -113,9 +116,9 @@ AUTH_USER_MODEL = 'sns.User'
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 

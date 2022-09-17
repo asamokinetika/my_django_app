@@ -1,38 +1,50 @@
-{% extends "sns/base.html"%}
-{% block content %}
 
-<head>
-    <meta charset="utf-8">
-    <title>GroupList</title>
-    
-</head>
+
+{% extends "sns/base.html"%}
+{% load static %}
+
+{% block title %}GroupList{% endblock %}
+{% block content %}
 <h2>GroupList</h2>
-<table class="table">
-    <tbody>
-        
-        {% for item in my_group %}
-        
-        <tr>
-            <td>{{item.group.group_name}}</td>
-            <td>your group</td>
-            <td><a href="{% url 'sns:talkroom_group' item.group.id %}"> Goto TALK</a></td>
-            
-            
-            
-        </tr>
-        {% endfor %}
-        
-        {% for item in group_invitation %}
-        <tr>
-            <td>{{item.group.group_name}}</td>
-            <td>group invitation from other user</td>
-            <td><a href="{% url 'sns:group_request_accept' item.id %}">accept</a> </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 <div>
-    <p><a href="{% url 'sns:create_group' %}">Create New Group</a></p>
+    <h3>参加済みのグループ</h3>
+    {% for item in my_group %}
+    <div class="card mb-3" style="max-width:auto;" >
+        <div class="row no-gutters">
+            <div class="col-md-4 my-auto">
+                
+                <img class="card-img" src="{{ item.group.img.url }}" alt="プロフィール画像" >
+                
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.group.group_name}}</h5>
+                    <a class="btn btn-primary" href="{% url 'sns:talkroom_group' item.id %}">Goto TALK</a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <h3>招待されているグループ</h3>
+    {% for item in group_invitation %}
+    <div class="card mb-3" style="max-width:auto;" >
+        <div class="row no-gutters">
+            <div class="col-md-4 my-auto">
+                <img class="card-img" src="{{ item.group.img.url }}" alt="プロフィール画像" >
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.group.group_name}}</h5>
+                    <a class="btn btn-primary" href="{% url 'sns:group_request_accept' item.id %}">グループ招待を承認する</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
 </div>
+
 
 {% endblock %}

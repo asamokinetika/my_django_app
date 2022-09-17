@@ -1,19 +1,34 @@
+
+
 {% extends "sns/base.html"%}
+{% load static %}
+
+{% block title %}フレンド承認{% endblock %}
 {% block content %}
 
-<head>
-    <meta charset="utf-8">
-    <title>Friendrequest</title>
-    
-</head>
-<h2>Friendrequest</h2>
+<h2>フレンド承認</h2>
 <form action="{% url 'sns:friend_request_accept' pk %}" method="post">
     {% csrf_token %}
    
-    <tr><th></th><td>
-        <input type="submit" value="accept" class="btn btn-primary mt-2">
-    </td></tr>
+   
+    <div class="card mb-" style="max-width:auto;" >
+        <div class="row no-gutters">
+            <div class="col-md-4 my-auto">
+                <img class="card-img" src="{{ invitation.inviter.img.url }}" alt="プロフィール画像" >
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{invitation.inviter.name}}</h5>
+                    
+                        
+                 <input type="submit" value="このユーザーの友達申請を承認する" class="btn btn-primary mt-2">
+                
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
+
 
 
 {% endblock %}

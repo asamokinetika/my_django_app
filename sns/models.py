@@ -8,7 +8,9 @@ from django.utils.translation import gettext_lazy as _
 def upload_path(instance, filename):
     ext = filename.split('.')[-1]
     return '/'.join(['image', str(instance.email)+'_'+str(instance.name)+str(".")+str(ext)])
-
+def upload_path_group(instance, filename):
+    ext = filename.split('.')[-1]
+    return '/'.join(['image', str(instance.group_name)+str(".")+str(ext)])
 class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **extra_fields):
@@ -34,7 +36,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(max_length=50, unique=True)
     name=models.CharField(max_length=50)
-    img = models.ImageField(blank=True, null=True, upload_to=upload_path)
+    img = models.ImageField(blank=True, null=True, upload_to=upload_path,default='default.png')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -53,6 +55,7 @@ class Group(models.Model):
     owner=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='group_owner')
     group_name=models.CharField(max_length=100)
     room=models.ForeignKey(TalkRoom,on_delete=models.CASCADE,related_name='talk_room_group')
+    img = models.ImageField(blank=True, null=True, upload_to=upload_path_group,default='default.png')
 
     def __str__(self):
         return str(self.group_name)+'(groupowner:'+str(self.owner)+')'

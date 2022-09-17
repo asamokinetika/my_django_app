@@ -21,6 +21,7 @@ services:
  db:
    container_name: "django_db"
    image: mysql:5.7
+   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
    restart: always
    environment:
      MYSQL_ROOT_PASSWORD: root
@@ -28,7 +29,9 @@ services:
      MYSQL_USER: django
      MYSQL_PASSWORD: django
      TZ: 'Asia/Tokyo'
+   
    volumes:
      - ./mysql:/var/lib/mysql
+     - ./my.cnf:/etc/mysql/conf.d/my.cnf
    ports:
      - 3306:3306

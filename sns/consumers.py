@@ -45,6 +45,7 @@ class ChatConsumer( AsyncWebsocketConsumer ):
             text_data_json = json.loads(text_data)
             message = text_data_json['message']
             name = text_data_json['name']
+            
             await self.createMessage(text_data_json)
             await self.channel_layer.group_send(
                 self.room_group_name,
@@ -52,6 +53,7 @@ class ChatConsumer( AsyncWebsocketConsumer ):
                     'type': 'chat_message',
                     'message': message,
                     'name': name,
+                    
                 }
             )
         except Exception as e:
@@ -62,10 +64,12 @@ class ChatConsumer( AsyncWebsocketConsumer ):
         try:
             message = event['message']
             name = event['name']
+           
             await self.send(text_data=json.dumps({
                 'type': 'chat_message',
                 'message': message,
                 'name': name,
+                
             }))
         except Exception as e:
             raise
