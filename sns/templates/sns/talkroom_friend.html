@@ -1,0 +1,58 @@
+{% extends "sns/base.html"%}
+{% load static %}
+
+{% block title %}TalkRoom{% endblock %}
+{% block content %}
+<h2>{{request.user}}と{{friend_name}}</h2>
+<div class="chat-room-body">
+{% for message in messages %}
+<div class="card border-dark bg-secondary text-white " style="width: 60rem;">
+    <div class="card-body">
+      <h5 class="card-title">名前：{{message.owner.name}}</h5>
+      <p class="card-text">{{message.content}}</p>
+    </div>
+  </div>
+  
+{% endfor %}
+
+<div id="footer"></div>
+</div>
+
+
+<br>
+<form >
+    <p hidden id="name">{{request.user.name}}</p>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label" >新しいメッセージ</label>
+            <textarea class="form-control" id="msg" rows="3"></textarea>
+          </div>
+      
+    <button id="send" class="btn-primary">送信</button>
+</form>
+
+<script>
+    const url = 'ws://localhost:8000/ws/' + '{{room}}'
+    var ws = new WebSocket(url)
+    
+    document.getElementById("send").onclick = function sendMessage () {
+        var sendData = {
+            name:document.getElementById('name').textContent,
+            message: document.getElementById('msg').value,
+            
+        }
+        ws.send(JSON.stringify(sendData))
+    }
+    
+    ws.onmessage = e => {
+        var receiveData = JSON.parse(e.data)
+        var messageBox = document.createElement('div')
+        messageBox.className = "card border-dark bg-secondary text-white "
+        messageBox.style.width="width: 30rem"
+        var header ='<div class="card-body border-dark bg-secondary text-white"><h5 class="card-title">名前：'+receiveData.name+'</h5>'
+        var body = '<p class="card-text">'+ receiveData.message + '</p></div>'
+        document.getElementById('footer').insertAdjacentHTML('beforebegin', header + body)
+        document.getElementById('footer').appendChild(messageBox)
+    }
+    
+    </script>
+{% endblock %}

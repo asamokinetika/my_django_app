@@ -1,0 +1,34 @@
+{% extends "sns/base.html"%}
+{% load static %}
+
+{% block title %}UserList{% endblock %}
+{% block content %}
+
+
+<h2>フレンド申請</h2>
+
+<div>
+
+    
+    <div class="card mb-" style="max-width:auto;" >
+        <div class="row no-gutters">
+            <div class="col-md-4 my-auto">
+                <img class="card-img" src="{{ invitee.img.url }}" alt="プロフィール画像" >
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{invitee.name}}</h5>
+                    <form action="{% url 'sns:friend_request' pk %}" method="post">
+                        {% csrf_token %}
+                            <input type="submit" value="このユーザーに友達申請をする" class="btn btn-primary mt-2">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+
+{% endblock %}

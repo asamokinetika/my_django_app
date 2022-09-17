@@ -1,0 +1,20 @@
+{% extends "sns/base.html"%}
+{% load static %}
+{% block title %}MyProfile{% endblock %}
+{% block content %}
+
+
+<h2>My_Profile</h2>
+<div class="card" style="width:25rem;">
+    {% if request.user.img %}
+    <img class="card-img-top" src="{{ user.img.url }}" alt="Card image cap">
+    {% else %}
+    <img class="card-img-top" src="{% static '/sns/assets/img/default.png' %}" alt="Card image cap">
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{ user.name }}</h5>
+      <h6 class="card-subtitle text-muted">{{ user.email }}</h6>
+      <a href="{% url 'sns:profile_edit' user.id %}" class="card-link">編集する</a>
+  </div>
+
+{% endblock %}
