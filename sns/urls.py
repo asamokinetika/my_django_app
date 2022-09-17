@@ -25,6 +25,6 @@ urlpatterns = [
     path('create_group',views.CreateGroup,name='create_group'),
     path('group_request_accept/<int:pk>',views.GroupRequestAccept,name='group_request_accept'),
     
-    path('base', views.base, name='top'),
+    
 
 ]
