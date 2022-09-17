@@ -33,7 +33,7 @@ class UserEditForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-control'    
 
 class FindUserForm(forms.Form):
-    find=forms.CharField(label='Find',required=False,widget=forms.TextInput(attrs={'class':'form-control'}))
+    find=forms.CharField(label='ユーザー名前検索',required=False,widget=forms.TextInput(attrs={'class':'form-control'}))
 
 
 
@@ -51,6 +51,7 @@ class CreateGroupForm(forms.Form):
             widget=forms.CheckboxSelectMultiple(),
             initial=vals
         )
+        self.fields['img']=forms.ImageField(label='img',)
 
 
 """class FriendListForm(forms.Form):

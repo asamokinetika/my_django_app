@@ -7,12 +7,23 @@
     
 </head>
 <h2>CreateGroup</h2>
-<form action="{% url 'sns:create_group'%}" method="post">
-    
+<form action="{% url 'sns:create_group'%}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
-<input type="hidden">
-    {{create_form}}
-<button type="submit" class="btn btn-primary mt-1">Create new Group</button>
+    {{ form.non_field_errors }}
+<div>
+    <p>新しいグループの名前</p>
+    {{create_form.room_name}}
+</div>
+<div>
+    <p>招待するフレンド</p>
+    {{create_form.friends}}
+</div>
+<div>
+    <p>グループアイコン画像</p>
+    {{create_form.img}}
+</div>
+<button type="submit" class="btn btn-primary mt-1">上の内容でグループを作成</button>
+
 </form>
 
 

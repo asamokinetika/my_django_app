@@ -3,5 +3,6 @@ psycopg2==2.9.3
 django-redis==5.2.0
 mysqlclient==1.4.6
 Pillow==7.2.0
+PyMySQL
 channels
 channels-redis

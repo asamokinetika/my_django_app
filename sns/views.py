@@ -58,6 +58,12 @@ class UserUpdate(OnlyYouMixin, generic.UpdateView):
         return resolve_url('sns:profile_detail', pk=self.kwargs['pk'])
 
 @login_required(login_url="sns/login")
+def hello(request):
+    return render(request,"sns/hello.html")
+
+
+
+@login_required(login_url="sns/login")
 def UserList(request):
     if request.method=="POST":
         form=FindUserForm(request.POST)
@@ -97,12 +103,14 @@ def Friendtalk(request,pk):
     
     
     friend=Friend.objects.get(id=pk)
+    friend_name=friend.inviter.name
     talkroom=friend.room
     messages=FriendMessage.objects.filter(room=talkroom).order_by('pub_date')
     params={
             'messages':messages,
             'room':str(talkroom.id),
-            'pk':pk
+            'pk':pk,
+            'friend_name':friend_name
     }
     return render(request,"sns/talkroom_friend.html",params)
 
@@ -110,7 +118,12 @@ def Friendtalk(request,pk):
 
 @login_required(login_url="sns/login")
 def FriendRequest(request,pk):
-
+    invitee=User.objects.get(id=pk)
+    params={
+            "pk":pk,
+            "invitee":invitee
+            
+        }
     if request.method=='POST':
         invitee=User.objects.get(id=pk)
         if invitee==request.user:
@@ -132,12 +145,19 @@ def FriendRequest(request,pk):
     else:
         params={
             "pk":pk,
+            "invitee":invitee
             
         }
         return render(request,'sns/friend_request.html',params)
         
 @login_required(login_url="sns/login")
 def FriendRequestAccept(request,pk):
+    invitaton=Friend.objects.get(id=pk)
+    params={
+            "pk":pk,
+            "inviter":invitaton
+            
+        }
     if request.method=='POST':
         invitaton=Friend.objects.get(id=pk)
         invitaton.auth=True
@@ -146,6 +166,7 @@ def FriendRequestAccept(request,pk):
     else:
         params={
             "pk":pk,
+            "invitation":invitaton
             
         }
         return render(request,'sns/friend_request_accept.html',params)
@@ -173,7 +194,10 @@ def CreateGroup(request):
         new_group=Group()
         new_group.owner=request.user
         new_group.group_name=request.POST['room_name']
+        new_group.img=request.FILES['img']
         new_group.room=new_room
+        new_group.save()
+        
         new_group.save()
         sel_fds=request.POST.getlist('friends')
         sel_user=User.objects.filter(id__in=sel_fds)
@@ -203,6 +227,12 @@ def CreateGroup(request):
 
 @login_required(login_url="sns/login")
 def GroupRequestAccept(request,pk):
+    invitaton=GroupInvitation.objects.get(id=pk)
+    params={
+            "pk":pk,
+            'invitation':invitaton
+            
+        }
     if request.method=='POST':
         invitaton=GroupInvitation.objects.get(id=pk)
         invitaton.auth=True
@@ -211,6 +241,7 @@ def GroupRequestAccept(request,pk):
     else:
         params={
             "pk":pk,
+            'invitation':invitaton
             
         }
         return render(request,'sns/group_request_accept.html',params)

@@ -12,6 +12,7 @@ urlpatterns = [
     path('signup/',views.Signup.as_view(),name='signup'),
     path('profile_detail/<int:pk>',views.UserDetail.as_view(),name='profile_detail'),
     path('profile_edit/<int:pk>',views.UserUpdate.as_view(),name="profile_edit"),
+    path('hello/',views.hello,name="hello"),
     path('user_list',views.UserList,name="user_list"),
 
     path('friend_list',views.FriendList,name="friend_list"),
