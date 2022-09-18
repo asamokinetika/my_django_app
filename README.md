@@ -20,4 +20,6 @@ Djangoを利用して作成した、チャットアプリです。ユーザー�
 
 ⑧同じくコンテナ内でコマンド　python manage.py　migrate でマイグレートしてください
 
+（Django　admin を利用する場合はこの段階でpython manage.py　createsuperuser でスーパーユーザーを作成してください　）
+
 ⑨localhost:8000/sns　をブラウザで開けばトップページにつながるはずです（もしうまくいかなければ、まずコンテナを再起動してみてください）
